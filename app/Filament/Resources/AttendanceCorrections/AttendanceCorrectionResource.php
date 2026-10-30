@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Filament\Resources\AttendanceCorrections;
+
+use App\Filament\Resources\AttendanceCorrections\Pages\CreateAttendanceCorrection;
+use App\Filament\Resources\AttendanceCorrections\Pages\EditAttendanceCorrection;
+use App\Filament\Resources\AttendanceCorrections\Pages\ListAttendanceCorrections;
+use App\Filament\Resources\AttendanceCorrections\Schemas\AttendanceCorrectionForm;
+use App\Filament\Resources\AttendanceCorrections\Tables\AttendanceCorrectionsTable;
+use App\Models\AttendanceCorrection;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+use UnitEnum;
+
+class AttendanceCorrectionResource extends Resource
+{
+    protected static ?string $model = AttendanceCorrection::class;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPencilSquare;
+
+    protected static UnitEnum|string|null $navigationGroup = 'Presensi & Pengajuan';
+
+    protected static ?string $navigationLabel = 'Koreksi Absensi';
+
+    protected static ?string $modelLabel = 'Koreksi Absensi';
+
+    protected static ?string $pluralModelLabel = 'Koreksi Absensi';
+
+    protected static ?int $navigationSort = 4;
+
+    public static function form(Schema $schema): Schema
+    {
+        return AttendanceCorrectionForm::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return AttendanceCorrectionsTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListAttendanceCorrections::route('/'),
+            'create' => CreateAttendanceCorrection::route('/create'),
+            'edit' => EditAttendanceCorrection::route('/{record}/edit'),
+        ];
+    }
+}
